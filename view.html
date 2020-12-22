@@ -23,8 +23,8 @@
                 <br>
 
                 <div class="text-center">
-                    <a href="/reserve"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span>
-                            Make Reservation</button></a>
+                    <!-- <a href="/make"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span>
+                            Make Reservation</button></a> -->
                     <a href="./home.html"><button class="btn btn-lg btn-default"><span
                                 class="fa fa-home"></span></button></a>
                 </div>
@@ -40,41 +40,14 @@
                         </div>
                         <div class="card-body">
                             <ul id="tableList" class="list-group">
-                                <li class="list-group-item mt-4">
-                                    <h2> </h2>
-                                    <hr>
-                                    <h2>Name: ${name} </h2>
-                                    <h2>Email: ahmed@example.com</h2>
-                                    <h2>Phone: 000-000-0000</h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #2</h2>
+                                <!-- <li class="list-group-item mt-4">
+                                    <h2>Table #1 </h2>
                                     <hr>
                                     <h2>Name: </h2>
                                     <h2>Party Size: </h2>
                                     <h2>Contact: </h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #3</h2>
-                                    <hr>
-                                    <h2>Name: </h2>
-                                    <h2>Party Size: </h2>
-                                    <h2>Contact: </h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #4</h2>
-                                    <hr>
-                                    <h2>Name: </h2>
-                                    <h2>Party Size: </h2>
-                                    <h2>Contact: </h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #5</h2>
-                                    <hr>
-                                    <h2>Name: </h2>
-                                    <h2>Party Size: </h2>
-                                    <h2>Contact: </h2>
-                                </li>
+                                </li> -->
+
                             </ul>
                         </div>
                     </div>
@@ -86,34 +59,13 @@
                         </div>
                         <div class="card-body">
                             <ul id="waitList" class="list-group">
-                                <li class="list-group-item mt-4">
+                                <!-- <li class="list-group-item mt-4">
                                     <h2>Table #1</h2>
                                     <hr>
                                     <h2>Name: </h2>
                                     <h2>Party Size: </h2>
                                     <h2>Contact: </h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #2</h2>
-                                    <hr>
-                                    <h2>Name: </h2>
-                                    <h2>Party Size: </h2>
-                                    <h2>Contact: </h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #3</h2>
-                                    <hr>
-                                    <h2>Name: </h2>
-                                    <h2>Party Size: </h2>
-                                    <h2>Contact: </h2>
-                                </li>
-                                <li class="list-group-item mt-4">
-                                    <h2>Table #4</h2>
-                                    <hr>
-                                    <h2>Name: </h2>
-                                    <h2>Party Size: </h2>
-                                    <h2>Contact: </h2>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -130,7 +82,50 @@
                     </p>
                 </div>
             </footer>
+            <script>
+                $.get("/api/currentTables/" + function (data) {
+                    console.log(data);
+                    if (data) {
+                        for (let i = 0; i < 5; i++) {
+                            let tableNumber = i + 1;
+                            let div = $("<div>")
+                            div.html = `<li class="list-group-item mt-4">
+                                    <h2>Table #${tableNumber}</h2>
+                                    <hr>
+                                    <h2>Name: ${data[i].name} </h2>
+                                    <h2>Party Size: ${data[i].partySize} </h2>
+                                    <h2>Contact: ${data[i].contact}</h2>
+                                </li>`
+                            $("#tableList").appendChild(div);
+                        };
+                    } else {
+                        // $("#name").text(
+                        //     "The force is not strong with this one. Your character was not found.");
+                        // $("#stats").hide();
+                    }
+                    $.get("/api/waitList/" + function (data) {
+                        console.log(data);
+                        if (data) {
+                            for (let i = 0; i < data.length; i++) {
+                                let tableNumber = i + 1;
+                                let div = $("<div>")
+                                div.html = `<li class="list-group-item mt-4">
+                                    <h2>Table #${tableNumber}</h2>
+                                    <hr>
+                                    <h2>Name: ${data[i].name} </h2>
+                                    <h2>Party Size: ${data[i].partySize} </h2>
+                                    <h2>Contact: ${data[i].contact}</h2>
+                                </li>`
+                                $("#waitList").appendChild(div);
 
+                            };
+                        } else {
+                            // $("#name").text(
+                            //     "The force is not strong with this one. Your character was not found.");
+                            // $("#stats").hide();
+                        }
+
+            </script>
         </div>
     </body>
 
